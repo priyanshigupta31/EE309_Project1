@@ -3,7 +3,7 @@ use ieee.std_logic_1164.all;
 
 entity extender_8to16 is
     generic(
-        operand_width : integer:=16;
+        operand_width : integer:=16
         );
     port (
         A: in std_logic_vector(7 downto 0);

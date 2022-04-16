@@ -26,7 +26,7 @@ end extender_9to16;
 
 entity extender_6to16 is
     generic(
-        operand_width : integer:=16;
+        operand_width : integer:=16
         );
     port (
         A: in std_logic_vector(5 downto 0);

@@ -9,7 +9,7 @@ ENTITY ram_infer IS
       write_address:  IN   integer RANGE 0 to 65535;
       read_address:   IN   integer RANGE 0 to 65535;
       we:    IN   std_logic;
-      control_Mem: in std_logic_vector(2 downto 0);
+      control_m: in std_logic_vector(1 downto 0);
       q:     OUT  std_logic_vector (15 DOWNTO 0)
    );
 END ram_infer;
@@ -24,26 +24,26 @@ BEGIN
          IF (we = '1') THEN
             ram_block(write_address) <= data;
          END IF;
-         q <= ram_block(read_address);
+         --q <= ram_block(read_address);
       END IF;
    END PROCESS;
 
 
     mem_proc : process( data, write_address, read_address, we, control_m )
     begin
-        if (control_Mem = "000") then --S0
+        if (control_m = "00") then --S0
             pc <= std_logic_vector(to_unsigned(read_address, 16));
             --we <= '0';
             q <= ir;--define
-        elsif (control_Mem = "001") then --S_l
+        elsif (control_m = "01") then --S_l
             t1 <= std_logic_vector(to_unsigned(read_address, 16));
             --we <= '0';
             q <= RF_d1;--define
-        elsif (control_Mem = "010") then --S_s
+        elsif (control_m = "10") then --S_s
             RF_d2 <= data;
             t2 <= std_logic_vector(to_unsigned(read_address, 16));
             --we <= '1';
-        elsif (control_Mem = "011") then --S_lm3
+        elsif (control_m = "11") then --S_lm3
             t2 <= std_logic_vector(to_unsigned(read_address, 16));
             --we <= '0';
             q <= RF_d2;--define

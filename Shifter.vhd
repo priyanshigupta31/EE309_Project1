@@ -7,33 +7,45 @@ entity shifter is
         );
     port (
         A: in std_logic_vector(operand_width-1 downto 0);
+		  controlword_Ls: in std_logic_vector(1 downto 0);
         B: out std_logic_vector(operand_width-1 downto 0)
     ) ;
 end shifter;
 
 architecture a1 of shifter is
-    signal B: std_logic;
- 
+    signal C: std_logic;
+
+signal pc, RF_d1, RF_d2, aluB, seB, t2, t1,t3, IR, A_temp: std_logic_vector(15 downto 0);
 begin
 shifter : process( A )
 begin
    
-	B <= A(15);
-	for i in range 15 loop
-		A(i+1) <= A(i);
-	end loop
-	A(0) <= B
+	C <= A(15);
+	for i in 0 to 14 loop
+		A_temp(i+1) <= A(i);
+		B(i+1) <= A_temp(i+1);
+	end loop;
+	B(0) <= C;
 	
 end process;
 
-signal pc, RF_d1, RF_d2, aluB, seB, t2, t1,t3: std_logic_vector(15 downto 0);
+
+ls1 : process( A )
 begin
-ls1 : process( A,B )
-begin
-if (controlword_Ls="01") then
-	A <= RF_d2;
+		
+if controlword_Ls="01" then
+	--A <= RF_d2;
 	B <= aluB;
-if (controlword_Ls="10") then
-	A <= IR;
+	RF_d2 <= A;
+	--aluB <= B;
+end if;
+if controlword_Ls="10" then
+	--A <= IR;
 	B <= t3;
+	IR <= A;
+	--t3 <= B;
+end if;
+
+end process;
+
 end a1 ; -- a1

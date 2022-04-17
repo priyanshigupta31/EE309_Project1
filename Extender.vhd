@@ -61,11 +61,11 @@ end process ; -- shift9to16
 if (controlword_SE2="01") then
     A <= IR(8 downto 0)
     B <= RF_d3
-    sel <= "1"
+    sel <= "1";
 elsif (controlword_SE2="10") then
     A <= IR(8 downto 0)
     B <= aluB
-    sel <= "0"
+    sel <= "0";
 end a1 ; -- a1
 
 
@@ -80,8 +80,8 @@ end process ; -- shift6to16
 
 if (controlword_SE1="01") then
     A <= IR(5 downto 0)
-    B <= aluB
+    B <= aluB;
 if (controlword_SE1="10") then
     A <= IR(5 downto 0)
-    B <= aluA
+    B <= aluA;
 end a3 ; -- a1

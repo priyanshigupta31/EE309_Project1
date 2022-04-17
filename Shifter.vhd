@@ -25,7 +25,11 @@ begin
 	A(0) <= B
 	
 end process;
-		
+
+signal pc, RF_d1, RF_d2, aluB, seB, t2, t1,t3: std_logic_vector(15 downto 0);
+begin
+ls1 : process( write_address, read_address, we, q, controlword_Reg1 )
+begin
 if (controlword_Ls="01") then
 	A <= RF_d2;
 	B <= aluB;

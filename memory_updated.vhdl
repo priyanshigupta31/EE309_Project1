@@ -16,7 +16,7 @@ END ram_infer;
 ARCHITECTURE rtl OF ram_infer IS
    TYPE mem IS ARRAY(0 TO 65535) OF std_logic_vector(15 DOWNTO 0);
    SIGNAL ram_block : mem;
-	signal pc, ir, t1, RF_d1, RF_d2, t2 : std_logic_vector(15 downto 0);
+	signal pc, IR, t1, RF_d1, RF_d2, t2 : std_logic_vector(15 downto 0);
 BEGIN
    PROCESS (clock)
    BEGIN
@@ -34,7 +34,7 @@ BEGIN
         if (control_m = "00") then --S0
             pc <= std_logic_vector(to_unsigned(read_address, 16));
             --we <= '0';
-            q <= ir;--define
+            q <= IR;--define
         elsif (control_m = "01") then --S_l
             t1 <= std_logic_vector(to_unsigned(read_address, 16));
             --we <= '0';

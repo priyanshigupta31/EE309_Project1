@@ -147,3 +147,5 @@ next_state_logic: process (clock, reset, IR, C, Z)
 					
 				when s_jri2 =>
 					state <= init;
+						
+end process;

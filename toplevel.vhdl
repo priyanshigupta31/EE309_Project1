@@ -106,8 +106,52 @@ architecture a of toplevel is
     END component;
 
     --registers
+   component R1 IS
+   PORT
+   (
+      clock: IN   std_logic;
+      data:  IN   std_logic_vector (15 DOWNTO 0);
+      write_address:  IN   integer RANGE 0 to 65536;
+      read_address:   IN   integer RANGE 0 to 65536;
+      we:    IN   std_logic;
+      controlword_Reg1: in std_logic_vector(2 downto 0);
+      q:     OUT  std_logic_vector (15 DOWNTO 0)
+   );
+END component;
+	     
+   component R2 IS
+   PORT
+   (
+      clock: IN   std_logic;
+      data:  IN   std_logic_vector (15 DOWNTO 0);
+      write_address:  IN   integer RANGE 0 to 65536;
+      read_address:   IN   integer RANGE 0 to 65536;
+      we:    IN   std_logic;
+      controlword_Reg2: in std_logic_vector(2 downto 0);
+      q:     OUT  std_logic_vector (15 DOWNTO 0)
+   );
+END component;
+	     
+   component R3 IS
+   PORT
+   (
+      clock: IN   std_logic;
+      data:  IN   std_logic_vector (15 DOWNTO 0);
+      write_address:  IN   integer RANGE 0 to 65536;
+      read_address:   IN   integer RANGE 0 to 65536;
+      we:    IN   std_logic;
+      controlword_Reg3: in std_logic_vector(1 downto 0);
+      q:     OUT  std_logic_vector (15 DOWNTO 0)
+   );
+END component;
 
     --signals
+	type state_type is (init, s0, s_ar, s_ar_ls, s_adi, s_lhi, s_ls, s_l, s_s, s_lm0, s_lm1, s_lm2, s_lm3, s_lm4, s_sm3, s_beq0, s_beq1, s0_b, s_jal1, s_jlr, s_jr1, s_jri2);
+	signal state_present, state_next: state_type;
+	TYPE reg IS ARRAY(0 TO 7) OF std_logic_vector(15 DOWNTO 0);
+   	SIGNAL reg_block : reg;
+	signal: pc, RF_d1, RF_d2, ls_out, seB, t2, t1, IR, aluB, aluA, MemD, aluC, A_temp, t3, t4: std_logic_vector(15 downto 0);
+	signal y_present: std_logic_vector(4 downto 0);
 
     begin
         ex1: extender_6to16 port map ();

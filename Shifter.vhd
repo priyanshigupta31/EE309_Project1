@@ -26,5 +26,10 @@ begin
 	
 end process;
 		
-if (controlword_shifter = "01")
+if (controlword_Ls="01") then
+	A <= RF_d2;
+	B <= aluB;
+if (controlword_Ls="10") then
+	A <= IR;
+	B <= t3;
 end a1 ; -- a1

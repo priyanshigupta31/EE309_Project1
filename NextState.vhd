@@ -32,7 +32,7 @@ architecture awesome of next_state_logic is
 	begin		
 			case state_present is 
 				when s0 =>
-					if IR(15 downto 12) = "0001" and IR(1 downto 0) = "00" then						--ADD
+					if IR(15 downto 12) = "0001" and IR(1 downto 0) = "00" then					--ADD
 						state_next <= s_ar;								
 	
 					elsif IR(15 downto 12) = "0001" and IR(1 downto 0) = "10" then					--ADC
@@ -75,10 +75,10 @@ architecture awesome of next_state_logic is
 					elsif IR(15 downto 12) = "1111" then													--LHI
 						state_next <= s_lhi;
 		
-					elsif IR(15 downto 12) = "0111" or "0101" then										--LW and SW
+					elsif IR(15 downto 12) = "0111" or "0101" then							--LW and SW
 						state_next <= s_ls;
 						
-					elsif IR(15 downto 12) = "1100" or "1101" then										--LM and SM
+					elsif IR(15 downto 12) = "1100" or "1101" then							--LM and SM
 						state_next <= s_lm0;
 					
 					elsif IR(15 downto 12) = "1000" then													--BEQ
@@ -151,7 +151,7 @@ architecture awesome of next_state_logic is
 					state_next <= init;
 					
 				when s0_b =>
-					if IR(15 downto 12) = "1001" then					--JAl
+					if IR(15 downto 12) = "1001" then								--JAl
 						state_next <= s_beq1;	
 					else
 						state_next <= s_jlr;

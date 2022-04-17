@@ -149,27 +149,57 @@ END component;
 	type state_type is (init, s0, s_ar, s_ar_ls, s_adi, s_lhi, s_ls, s_l, s_s, s_lm0, s_lm1, s_lm2, s_lm3, s_lm4, s_sm3, s_beq0, s_beq1, s0_b, s_jal1, s_jlr, s_jr1, s_jri2);
 	signal state_present, state_next: state_type;
 	TYPE reg IS ARRAY(0 TO 7) OF std_logic_vector(15 DOWNTO 0);
+	     
    	SIGNAL reg_block : reg;
-	signal: pc, RF_d1, RF_d2, ls_out, seB, t2, t1, IR, aluB, aluA, MemD, aluC, A_temp, t3, t4: std_logic_vector(15 downto 0);
+	     
+	signal: pc, RF_d1, RF_d2, ls_out, seB, t2, t1, IR, aluB, aluA, MemD, aluC, A_temp, t3, t4, data: std_logic_vector(15 downto 0);
+	     
 	signal y_present: std_logic_vector(4 downto 0);
-
+	     
+	     
+	signal C, S, clock, reset, we: std_logic;
+	     
+	     
+	signal: controlword_ALU: std_logic_vector(3 downto 0);
+	signal: controlword_Mem, controlword_Reg1, controlword_Reg2, controlword_pco, controlword_pci: std_logic_vector(2 downto 0);
+	signal: controlword_Reg3, controlword_Ls, controlword_SE1: std_logic_vector(1 downto 0);
+	signal: controlword_SE2, controlword_SE3: std_logic;
+	     
+	     
+	variable integer read_address, write_address;
     begin
-        ex1: extender_6to16 port map ();
-        ex2: extender_9to16LSB port map();
-        ex3: extender_9to16MSB port map();
+        ex1: extender_6to16 port map (A => IR(5 downto 0), B => aluB, controlword_SE1 => controlword_SE1);			--aluA or aluB?
+        ex2: extender_9to16LSB port map(A => IR(8 downto 0), B => aluB, controlword_SE3 => controlword_SE3);
+        ex3: extender_9to16MSB port map(A => IR(8 downto 0), B => aluB, controlword_SE2 => controlword_SE2);
 
-        nsl: next_state_logic port map();
+        nsl: next_state_logic port map(IR => IR, C => C, Z => Z, clock => clock, reset => reset, t1 => t1, t3 => t3);
+	 
+	rf1: R1 port map (clock => clock, data => data, write_address => write_address, read_address => read_address, we => we, controlword_Reg1 => controlword_Reg1);
+	rf2: R2 port map (clock => clock, data => data, write_address => write_address, read_address => read_address, we => we, controlword_Reg1 => controlword_Reg2);
+	rf3: R3 port map (clock => clock, data => data, write_address => write_address, read_address => read_address, we => we, controlword_Reg1 => controlword_Reg3);
+	
 
-        shift: shifter port map();
+        shift: shifter port map(A => IR, B => t3, controlword_Ls => controlword_Ls);
 
-        alu1: alu port map();
+        alu1: alu port map(A => aluA, B => aluB, sel => sel, controlword_ALU => controlword_ALU ,op => aluC, C => C);
 
-        mem: ram_infer port map();
+        mem: ram_infer port map(clock => clock, data => MemD, write_address => write_address, read_address => read_address, we => we, q => aluA, controlword_m => controlword_m);
 
-        control: controloutput port map();
+        control: controloutput port map(
+	    controlword_ALU => controlword_ALU,
+            controlword_Mem => controlword_Mem,
+            controlword_Reg1 => controlword_Reg1,
+            controlword_Reg2 => controlword_Reg2,
+            controlword_Reg3 => controlword_Reg3,
+            controlword_Ls => controlword_Ls,
+            controlword_SE1 => controlword_SE1,
+            controlword_SE2 => controlword_SE2,
+            controlword_SE3 => controlword_SE3,
+            controlword_pco => controlword_pco,
+            controlword_pci => controlword_pci
+	);
 
-        
-
+        end a;
 
 
 

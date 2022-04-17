@@ -7,7 +7,8 @@
             controlword_Reg3: out std_logic_vector (1 downto 0);
             controlword_Ls: out std_logic_vector (1 downto 0);
             controlword_SE1: out std_logic_vector (1 downto 0);
-            controlword_SE2: out std_logic_vector (1 downto 0);
+            controlword_SE2: out std_logic;
+            controlword_SE3: out std_logic;
             controlword_pco: out std_logic_vector (2 downto 0);
             controlword_pci: out std_logic_vector (2 downto 0);
             --controlword_t1o: out std_logic_vector (2 downto 0);
@@ -32,7 +33,8 @@
             controlword_Reg3 = 00;
             controlword_Ls = 00;
             controlword_SE1 = 00;
-            controlword_SE2 = 00;
+            controlword_SE2 = 0;
+            controlword_SE3 = 0;
             controlword_pco = 001;
             controlword_pci = 001;
             --controlword_t1o = 001;
@@ -52,7 +54,8 @@
             controlword_Reg3 = 01;
             controlword_Ls = 00;
             controlword_SE1 = 00;
-            controlword_SE2 = 00;
+            controlword_SE2 = 0;
+            controlword_SE3 = 0;
             controlword_pco = 000;
             controlword_pci = 000;
             --controlword_t1o = 000;
@@ -72,7 +75,8 @@
             controlword_Reg3 = 01;
             controlword_Ls = 01;
             controlword_SE1 = 00;
-            controlword_SE2 = 00;
+            controlword_SE2 = 0;
+            controlword_SE3 = 0;
             controlword_pco = 000;
             controlword_pci = 000;
             --controlword_t1o = 000;
@@ -92,7 +96,8 @@
             controlword_Reg3 = 10;
             controlword_Ls = 00;
             controlword_SE1 = 01;
-            controlword_SE2 = 00;
+            controlword_SE2 = 0;
+            controlword_SE3 = 0;
             controlword_pco = 000;
             controlword_pci = 000;
             --controlword_t1o = 000;
@@ -112,7 +117,8 @@
             controlword_Reg3 = 11;
             controlword_Ls = 00;
             controlword_SE1 = 00;
-            controlword_SE2 = 01;
+            controlword_SE2 = 0;
+            controlword_SE3 = 1;
             controlword_pco = 000;
             controlword_pci = 000;
             --controlword_t1o = 000;
@@ -132,7 +138,8 @@
             controlword_Reg3 = 00;
             controlword_Ls = 00;
             controlword_SE1 = 10;
-            controlword_SE2 = 00;
+            controlword_SE2 = 0;
+            controlword_SE3 = 0;
             controlword_pco = 000;
             controlword_pci = 000;
             --controlword_t1o = 000;
@@ -152,7 +159,8 @@
             controlword_Reg3 = 00;
             controlword_Ls = 00;
             controlword_SE1 = 00;
-            controlword_SE2 = 00;
+            controlword_SE2 = 0;
+            controlword_SE3 = 0;
             controlword_pco = 000;
             controlword_pci = 000;
             --controlword_t1o = 000;
@@ -172,7 +180,8 @@
             controlword_Reg3 = 00;
             controlword_Ls = 00;
             controlword_SE1 = 00;
-            controlword_SE2 = 00;
+            controlword_SE2 = 0;
+            controlword_SE3 = 0;
             controlword_pco = 000;
             controlword_pci = 000;
             --controlword_t1o = 000;
@@ -192,7 +201,8 @@
             controlword_Reg3 = 00;
             controlword_Ls = 00;
             controlword_SE1 = 00;
-            controlword_SE2 = 00;
+            controlword_SE2 = 0;
+            controlword_SE3 = 0;
             controlword_pco = 000;
             controlword_pci = 000;
             --controlword_t1o = 000;
@@ -212,7 +222,8 @@
             controlword_Reg3 = 00;
             controlword_Ls = 10;
             controlword_SE1 = 00;
-            controlword_SE2 = 00;
+            controlword_SE2 = 0;
+            controlword_SE3 = 0;
             controlword_pco = 000;
             controlword_pci = 000;
             --controlword_t1o = 000;
@@ -232,7 +243,8 @@
             controlword_Reg3 = 00;
             controlword_Ls = 00;
             controlword_SE1 = 00;
-            controlword_SE2 = 00;
+            controlword_SE2 = 0;
+            controlword_SE3 = 0;
             controlword_pco = 000;
             controlword_pci = 000;
             --controlword_t1o = 010;
@@ -252,7 +264,8 @@
             controlword_Reg3 = 00;
             controlword_Ls = 00;
             controlword_SE1 = 00;
-            controlword_SE2 = 00;
+            controlword_SE2 = 0;
+            controlword_SE3 = 0;
             controlword_pco = 000;
             controlword_pci = 000;
             --controlword_t1o = 100;
@@ -272,7 +285,8 @@
             controlword_Reg3 = 00;
             controlword_Ls = 00;
             controlword_SE1 = 00;
-            controlword_SE2 = 00;
+            controlword_SE2 = 0;
+            controlword_SE3 = 0;
             controlword_pco = 000;
             controlword_pci = 000;
             --controlword_t1o = 000;
@@ -292,7 +306,8 @@
             controlword_Reg3 = 00;
             controlword_Ls = 00;
             controlword_SE1 = 00;
-            controlword_SE2 = 00;
+            controlword_SE2 = 0;
+            controlword_SE3 = 0;
             controlword_pco = 000;
             controlword_pci = 000;
             --controlword_t1o = 101;
@@ -312,7 +327,8 @@
             controlword_Reg3 = 00;
             controlword_Ls = 00;
             controlword_SE1 = 00;
-            controlword_SE2 = 00;
+            controlword_SE2 = 0;
+            controlword_SE3 = 0;
             controlword_pco = 000;
             controlword_pci = 000;
             --controlword_t1o = 000;
@@ -332,7 +348,8 @@
             controlword_Reg3 = 00;
             controlword_Ls = 00;
             controlword_SE1 = 01;
-            controlword_SE2 = 00;
+            controlword_SE2 = 0;
+            controlword_SE3 = 0;
             controlword_pco = 010;
             controlword_pci = 010;
             --controlword_t1o = 000;
@@ -352,7 +369,8 @@
             controlword_Reg3 = 00;
             controlword_Ls = 00;
             controlword_SE1 = 00;
-            controlword_SE2 = 00;
+            controlword_SE2 = 0;
+            controlword_SE3 = 0;
             controlword_pco = 010;
             controlword_pci = 000;
             --controlword_t1o = 000;
@@ -372,7 +390,8 @@
             controlword_Reg3 = 00;
             controlword_Ls = 00;
             controlword_SE1 = 00;
-            controlword_SE2 = 10;
+            controlword_SE2 = 0;
+            controlword_SE3 = 0;
             controlword_pco = 000;
             controlword_pci = 011;
             --controlword_t1o = 000;
@@ -392,7 +411,8 @@
             controlword_Reg3 = 00;
             controlword_Ls = 00;
             controlword_SE1 = 00;
-            controlword_SE2 = 00;
+            controlword_SE2 = 1;
+            controlword_SE3 = 0;
             controlword_pco = 000;
             controlword_pci = 000;
             --controlword_t1o = 000;
@@ -412,7 +432,8 @@
             controlword_Reg3 = 00;
             controlword_Ls = 00; 
             controlword_SE1 = 00;
-            controlword_SE2 = 00;
+            controlword_SE2 = 0;
+            controlword_SE3 = 0;
             controlword_pco = 000;
             controlword_pci = 010;
             --controlword_t1o = 011;

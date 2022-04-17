@@ -196,6 +196,12 @@ begin
 				t1 <= A;
             op <= sub_1(A);
             --t4 <= op;
+
+        elsif (control = "1101") then --S_jr2
+            t1 <= A;
+            pc <= B;
+        op <= sub(A, B);
+        --t2 <= op;
         
         end if;
     

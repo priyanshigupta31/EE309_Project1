@@ -1,15 +1,15 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity extender_8to16 is
-    generic(
-        operand_width : integer:=16
-        );
-    port (
-        A: in std_logic_vector(7 downto 0);
-        B: out std_logic_vector(operand_width-1 downto 0)
-    ) ;
-end extender_8to16;
+--entity extender_8to16 is
+    --generic(
+        --operand_width : integer:=16
+        --);
+    --port (
+        --A: in std_logic_vector(7 downto 0);
+        --B: out std_logic_vector(operand_width-1 downto 0)
+    --) ;
+--end extender_8to16;
 
 
 entity extender_9to16 is
@@ -34,15 +34,15 @@ entity extender_6to16 is
     ) ;
 end extender_6to16;
 
-architecture a1 of extender_8to16 is
+--architecture a1 of extender_8to16 is
     
-begin
-shift8to16 : process( A, B )
-begin
-			B <= "00000000"&A;
+--begin
+--shift8to16 : process( A, B )
+--begin
+			--B <= "00000000"&A;
 		
-end process ; -- shift8to16
-end a1 ; -- a1
+--end process ; -- shift8to16
+--end a1 ; -- a1
 
 
 architecture a2 of extender_9to16 is
@@ -57,6 +57,15 @@ begin
 		end if;
 		
 end process ; -- shift9to16
+
+if (controlword_SE2="01") then
+    A <= IR(8 downto 0)
+    B <= RF_d3
+    sel <= "1"
+elsif (controlword_SE2="10") then
+    A <= IR(8 downto 0)
+    B <= aluB
+    sel <= "0"
 end a1 ; -- a1
 
 
@@ -68,4 +77,11 @@ begin
 			B <= "0000000000"&A;
 		
 end process ; -- shift6to16
+
+if (controlword_SE1="01") then
+    A <= IR(5 downto 0)
+    B <= aluB
+if (controlword_SE1="10") then
+    A <= IR(5 downto 0)
+    B <= aluA
 end a3 ; -- a1

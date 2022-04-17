@@ -4,7 +4,7 @@
             controlword_Mem: out std_logic_vector (2 downto 0);
             controlword_Reg1: out std_logic_vector (2 downto 0);
             controlword_Reg2: out std_logic_vector (2 downto 0);
-            controlword_Reg3: out std_logic_vector (2 downto 0);
+            controlword_Reg3: out std_logic_vector (1 downto 0);
             controlword_Ls: out std_logic_vector (1 downto 0);
             controlword_SE1: out std_logic_vector (1 downto 0);
             controlword_SE2: out std_logic_vector (1 downto 0);
@@ -29,7 +29,7 @@
             controlword_Mem = 001;
             controlword_Reg1 = 000;
             controlword_Reg2 = 000;
-            controlword_Reg3 = 000;
+            controlword_Reg3 = 00;
             controlword_Ls = 00;
             controlword_SE1 = 00;
             controlword_SE2 = 00;
@@ -49,7 +49,7 @@
             controlword_Mem = 000;
             controlword_Reg1 = 001;
             controlword_Reg2 = 001;
-            controlword_Reg3 = 001;
+            controlword_Reg3 = 01;
             controlword_Ls = 00;
             controlword_SE1 = 00;
             controlword_SE2 = 00;
@@ -69,7 +69,7 @@
             controlword_Mem = 000;
             controlword_Reg1 = 001;
             controlword_Reg2 = 010;
-            controlword_Reg3 = 001;
+            controlword_Reg3 = 01;
             controlword_Ls = 01;
             controlword_SE1 = 00;
             controlword_SE2 = 00;
@@ -89,7 +89,7 @@
             controlword_Mem = 000;
             controlword_Reg1 = 001;
             controlword_Reg2 = 000;
-            controlword_Reg3 = 010;
+            controlword_Reg3 = 10;
             controlword_Ls = 00;
             controlword_SE1 = 01;
             controlword_SE2 = 00;
@@ -109,7 +109,7 @@
             controlword_Mem = 000;
             controlword_Reg1 = 000;
             controlword_Reg2 = 000;
-            controlword_Reg3 = 011;
+            controlword_Reg3 = 11;
             controlword_Ls = 00;
             controlword_SE1 = 00;
             controlword_SE2 = 01;
@@ -129,7 +129,7 @@
             controlword_Mem = 000;
             controlword_Reg1 = 000;
             controlword_Reg2 = 001;
-            controlword_Reg3 = 000;
+            controlword_Reg3 = 00;
             controlword_Ls = 00;
             controlword_SE1 = 10;
             controlword_SE2 = 00;
@@ -149,7 +149,7 @@
             controlword_Mem = 010;
             controlword_Reg1 = 010;
             controlword_Reg2 = 000;
-            controlword_Reg3 = 000;
+            controlword_Reg3 = 00;
             controlword_Ls = 00;
             controlword_SE1 = 00;
             controlword_SE2 = 00;
@@ -169,7 +169,7 @@
             controlword_Mem = 011;
             controlword_Reg1 = 000;
             controlword_Reg2 = 011;
-            controlword_Reg3 = 000;
+            controlword_Reg3 = 00;
             controlword_Ls = 00;
             controlword_SE1 = 00;
             controlword_SE2 = 00;
@@ -189,7 +189,7 @@
             controlword_Mem = 000;
             controlword_Reg1 = 011;
             controlword_Reg2 = 000;
-            controlword_Reg3 = 000;
+            controlword_Reg3 = 00;
             controlword_Ls = 00;
             controlword_SE1 = 00;
             controlword_SE2 = 00;
@@ -209,7 +209,7 @@
             controlword_Mem = 000;
             controlword_Reg1 = 000;
             controlword_Reg2 = 000;
-            controlword_Reg3 = 000;
+            controlword_Reg3 = 00;
             controlword_Ls = 10;
             controlword_SE1 = 00;
             controlword_SE2 = 00;
@@ -229,7 +229,7 @@
             controlword_Mem = 000;
             controlword_Reg1 = 000;
             controlword_Reg2 = 000;
-            controlword_Reg3 = 000;
+            controlword_Reg3 = 00;
             controlword_Ls = 00;
             controlword_SE1 = 00;
             controlword_SE2 = 00;
@@ -249,7 +249,7 @@
             controlword_Mem = 100;
             controlword_Reg1 = 000;
             controlword_Reg2 = 100;
-            controlword_Reg3 = 000;
+            controlword_Reg3 = 00;
             controlword_Ls = 00;
             controlword_SE1 = 00;
             controlword_SE2 = 00;
@@ -269,7 +269,7 @@
             controlword_Mem = 000;   
             controlword_Reg1 = 000;
             controlword_Reg2 = 000;
-            controlword_Reg3 = 000;
+            controlword_Reg3 = 00;
             controlword_Ls = 00;
             controlword_SE1 = 00;
             controlword_SE2 = 00;
@@ -289,7 +289,7 @@
             controlword_Mem = 011;
             controlword_Reg1 = 000;
             controlword_Reg2 = 101;
-            controlword_Reg3 = 000;
+            controlword_Reg3 = 00;
             controlword_Ls = 00;
             controlword_SE1 = 00;
             controlword_SE2 = 00;
@@ -309,7 +309,7 @@
             controlword_Mem = 000;
             controlword_Reg1 = 001;
             controlword_Reg2 = 001;
-            controlword_Reg3 = 000;
+            controlword_Reg3 = 00;
             controlword_Ls = 00;
             controlword_SE1 = 00;
             controlword_SE2 = 00;
@@ -329,7 +329,7 @@
             controlword_Mem = 000;
             controlword_Reg1 = 000;
             controlword_Reg2 = 000;
-            controlword_Reg3 = 000;
+            controlword_Reg3 = 00;
             controlword_Ls = 00;
             controlword_SE1 = 01;
             controlword_SE2 = 00;
@@ -349,7 +349,7 @@
             controlword_Mem = 001;
             controlword_Reg1 = 100;
             controlword_Reg2 = 000;
-            controlword_Reg3 = 000;
+            controlword_Reg3 = 00;
             controlword_Ls = 00;
             controlword_SE1 = 00;
             controlword_SE2 = 00;
@@ -369,7 +369,7 @@
             controlword_Mem = 000;
             controlword_Reg1 = 000;
             controlword_Reg2 = 110;
-            controlword_Reg3 = 000;
+            controlword_Reg3 = 00;
             controlword_Ls = 00;
             controlword_SE1 = 00;
             controlword_SE2 = 10;
@@ -389,7 +389,7 @@
             controlword_Mem = 000;
             controlword_Reg1 = 001;
             controlword_Reg2 = 000;
-            controlword_Reg3 = 000;
+            controlword_Reg3 = 00;
             controlword_Ls = 00;
             controlword_SE1 = 00;
             controlword_SE2 = 00;
@@ -409,7 +409,7 @@
             controlword_Mem = 000;
             controlword_Reg1 = 000;
             controlword_Reg2 = 000;
-            controlword_Reg3 = 000;
+            controlword_Reg3 = 00;
             controlword_Ls = 00; 
             controlword_SE1 = 00;
             controlword_SE2 = 00;

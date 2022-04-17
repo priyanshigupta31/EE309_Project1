@@ -34,7 +34,7 @@ architecture a1 of alu_beh is
 					sum_int(i) := A(i) xor B(i) xor carry(i);
 					carry(i+1) := (A(i) and B(i)) or ((A(i) xor B(i)) and carry(i));
 				end loop L1;
-				C := carry(operand_width-1)
+				C <= carry(operand_width-1);
 				sum := sum_int;
             return sum;
     end add;
@@ -54,7 +54,7 @@ architecture a1 of alu_beh is
 	 
 	 function add_2(A: in std_logic_vector(operand_width-1 downto 0))
         return std_logic_vector is
-				constant B: std_logic_vector(operand_width-1 downto 0)):="0000000000000011";
+				constant B: std_logic_vector(operand_width-1 downto 0):="0000000000000011";
             variable sum_int: std_logic_vector(operand_width-1 downto 0);
 				variable carry: std_logic_vector(operand_width downto 0);
 				variable sum: std_logic_vector(operand_width-1 downto 0);
@@ -87,23 +87,46 @@ architecture a1 of alu_beh is
 					diff_int(i) := A(i) xor B(i) xor carry(i);
 					carry(i+1) := (A(i) and B(i)) or ((A(i) xor B(i)) and carry(i));
 				end loop L1;
-				C := carry(operand_width-1)
+				C <= carry(operand_width-1);
 				diff := diff_int;
             return diff;
     end sub;
+	 
+	 function sub_1(A: in std_logic_vector(operand_width-1 downto 0))
+        return std_logic_vector is
+				constant B: std_logic_vector(operand_width-1 downto 0):="0000000000000001";
+            variable diff_int: std_logic_vector(operand_width-1 downto 0);
+				variable carry: std_logic_vector(operand_width downto 0);
+				variable diff: std_logic_vector(operand_width-1 downto 0);
+				variable B_xor_M: std_logic_vector(operand_width-1 downto 0);
+				constant M: std_logic:= '1';
+        begin
+            -- write logic for addition
+            -- Hint: Use for loop
+				carry(0) := '1';
+				L1: for i in 0 to 3 loop
+					B_xor_M(i) := B(i) xor M;
+					diff_int(i) := A(i) xor B(i) xor carry(i);
+					carry(i+1) := (A(i) and B(i)) or ((A(i) xor B(i)) and carry(i));
+				end loop L1;
+				--C <= carry(operand_width-1);
+				diff := diff_int;
+            return diff;
+    end sub_1;
 
+signal pc, RF_d1, RF_d2, ls_out, sel16_out, t2, t1: std_logic_vector(15 downto 0);
 begin
 alu : process( A, B, sel, control )
 begin
     
         if(control = "0001") then --S0
-            A <= pc; --define pc signal?
+				pc <= A;
             op <= add_2(A); -- not possible to use op, define t1?
            -- t1 <= op;
         
         elsif(control = "0010") then --S_ar
-            A <= RF_d1;--define
-            B <= RF_d2;--define
+				RF_d1 <= A;
+				RF_d2 <= B;
             if (sel = "00") then 
                 op <= add_2(A);
             elsif (sel = "01") then
@@ -116,9 +139,8 @@ begin
            -- RF_d3 <= op;--define
         
         elsif(control = "0011") then --S_ar_ls
-            A <= RF_d1;--define
-            --ls_in <= RF_d2;--define, instantiate shifter
-            B <= ls_out;
+				RF_d1 <= A;
+				ls_out <= B;
             if (sel = "00") then 
                 op <= add_2(A);
             elsif (sel = "01") then
@@ -131,52 +153,51 @@ begin
            -- RF_d3 <= op;--define
         
         elsif(control = "0100") then --S_adi
-            A <= RF_d1;
-            B <= se16_out;--define
+				RF_d1 <= A;
+				sel16_out <= B;
             op <= add(A, B);
             --RF_d3 <= op;
         
         elsif(control = "0101") then --S_ls
-            A <= se16_out;--**
-            B <= RF_d1;
+				sel16_out <= A;
+				RF_d1 <= B;
             op <= add(A, B);
             --memA <= op;
         
         elsif (control = "0110") then --S_beq0
-            A <= RF_d1;
-            B <= RF_d2;
+				RF_d1 <= A;
+				RF_d2 <= B;
             op <= sub (A, B);
             --t1 <= op;
         
         elsif (control = "1001") then --S_beq1
-            A <= pc;
-            B <= se16_out;
+				pc <= A;
+				sel16_out <= B;
             op <= sub (A, B);
             --t1 <= op;
         
         elsif (control = "0111") then --S_0b
-            A <= pc;
+				pc <= A;
             op <= add_2(A);
             --RF_d3 <= op;
         
         elsif (control = "1000") then --S_jri1
-            A <= RF_d1;
-            B <= se16_out;
+				RF_d1 <= A;
+				sel16_out <= B;
             op <= add(A, B);
             --RF_d3 <= op;
         
         elsif (control = "1011") then --S_lm4
-            A <= t2;
+				t2 <= A;
             op <= add_2(A);
             --t3 <= op;
 
         elsif (control = "1100") then --S_lm2
-            A <= t1;
-            B <= "0000000000000001";
-            op <= sub(A, B);
+				t1 <= A;
+            op <= sub_1(A);
             --t4 <= op;
         
-        
+        end if;
     
     
 end process ; -- alu

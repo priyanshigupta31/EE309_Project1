@@ -24,5 +24,5 @@ begin
 	end loop
 	A(0) <= B
 	
-end process shifter; 
+end process; 
 end a1 ; -- a1

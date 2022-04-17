@@ -6,8 +6,8 @@ ENTITY R1 IS
    (
       clock: IN   std_logic;
       data:  IN   std_logic_vector (15 DOWNTO 0);
-      write_address:  IN   integer RANGE 0 to 65536;
-      read_address:   IN   integer RANGE 0 to 65536;
+      write_address:  IN   integer RANGE 0 to 7;
+      read_address:   IN   integer RANGE 0 to 7;
       we:    IN   std_logic;
       controlword_Reg1: in std_logic_vector(2 downto 0);
       q:     OUT  std_logic_vector (15 DOWNTO 0)

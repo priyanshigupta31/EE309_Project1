@@ -110,7 +110,23 @@ architecture a of toplevel is
     --signals
 
     begin
+        ex1: extender_6to16 port map ();
+        ex2: extender_9to16LSB port map();
+        ex3: extender_9to16MSB port map();
+
+        nsl: next_state_logic port map();
+
+        shift: shifter port map();
+
+        alu1: alu port map();
+
+        mem: ram_infer port map();
+
+        control: controloutput port map();
+
         
+
+
 
 
     

@@ -27,7 +27,7 @@ BEGIN
 
 signal pc, RF_d1, RF_d2, ls_out, seB, t2, t1: std_logic_vector(15 downto 0);
 begin
-ext1 : process( write_address, read_address, we, q, controlword_Reg1 )
+rx1 : process( write_address, read_address, we, q, controlword_Reg1 )
 begin
 if (controlword_Reg1="001") then
    we <= "0";
@@ -77,7 +77,7 @@ BEGIN
 
 signal pc, RF_d1, RF_d2, ls_out, seB, t2, t1: std_logic_vector(15 downto 0);
 begin
-ext2 : process( write_address, read_address, we, q, controlword_Reg2 )
+rx2 : process( write_address, read_address, we, q, controlword_Reg2 )
 begin         
 if (controlword_Reg2="001") then
    we <= "0";
@@ -133,7 +133,7 @@ BEGIN
 
 signal pc, RF_d1, RF_d2, ls_out, seB, t2, t1: std_logic_vector(15 downto 0);
 begin
-ext3 : process( write_address, read_address, we, q, controlword_Reg3 )
+rx3 : process( write_address, read_address, we, q, controlword_Reg3 )
 begin
 if (controlword_Reg3="01") then
    we <= "1";

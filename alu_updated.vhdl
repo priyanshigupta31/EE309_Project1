@@ -114,7 +114,7 @@ architecture a1 of alu_beh is
             return diff;
     end sub_1;
 
-signal pc, RF_d1, RF_d2, ls_out, sel16_out, t2, t1: std_logic_vector(15 downto 0);
+signal pc, RF_d1, RF_d2, ls_out, seB, t2, t1: std_logic_vector(15 downto 0);
 begin
 alu : process( A, B, sel, controlword_alu )
 begin
@@ -154,12 +154,12 @@ begin
         
         elsif(controlword_alu = "0100") then --S_adi
 				RF_d1 <= A;
-				sel16_out <= B;
+				seB <= B;
             op <= add(A, B);
             --RF_d3 <= op;
         
         elsif(controlword_alu = "0101") then --S_ls
-				sel16_out <= A;
+				seB <= A;
 				RF_d1 <= B;
             op <= add(A, B);
             --memA <= op;
@@ -172,7 +172,7 @@ begin
         
         elsif (controlword_alu = "1001") then --S_beq1
 				pc <= A;
-				sel16_out <= B;
+				seB <= B;
             op <= sub (A, B);
             --t1 <= op;
         
@@ -183,7 +183,7 @@ begin
         
         elsif (controlword_alu = "1000") then --S_jri1
 				RF_d1 <= A;
-				sel16_out <= B;
+				seB <= B;
             op <= add(A, B);
             --RF_d3 <= op;
         

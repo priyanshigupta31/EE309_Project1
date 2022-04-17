@@ -5,7 +5,7 @@
             controlword_Reg: out std_logic_vector (3 downto 0);
             controlword_Ls: out std_logic_vector (1 downto 0);
             controlword_SE1: out std_logic_vector (1 downto 0);
-            controlword_SE1: out std_logic_vector (1 downto 0);
+            controlword_SE2: out std_logic_vector (1 downto 0);
             controlword_pco: out std_logic_vector (2 downto 0);
             controlword_pci: out std_logic_vector (2 downto 0);
             controlword_t1o: out std_logic_vector (2 downto 0);

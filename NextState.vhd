@@ -1,27 +1,4 @@
-when s0  =>
-	memA <= pc;
-	 alu0: alu_beh
-         port map (A => pc, B => "0000000000000010", sel => "00", op => t1, C => C);
-	IR <= memD;
-	
-	
-	
-when s_ar =>
-	RF_a1 <= IR (11 downto 9);
-	RF_a2 <= IR (8 downto 6);
-	alu1: alu_beh
-         port map (A => RF_d1, B => RF_d2	, sel => IR(13 downto 12), op => RF_d3, C => C);
-	RF_a3 <= IR(5 downto 3);
-	
-	
-	
-when s_ar_ls =>
-	RF_a1 <= IR (11 downto 9);
-	RF_a2 <= IR (8 downto 6);
-	alu1: alu_beh
-         port map (A => RF_d1, B => shifter(RF_d2)	, sel => IR(1 downto 0), op => RF_d3, C => C);
-	RF_a3 <= IR(5 downto 3);
-	
+
 	
 	
 next_state_logic: process (clock, reset, IR, C, Z)
@@ -111,6 +88,36 @@ next_state_logic: process (clock, reset, IR, C, Z)
 					
 				when s_s =>
 					state <= init;
+							
+				when s_lm0 =>
+					if t1 = 0 then
+						state <= init;
+					else
+						state <= s_lm1;
+					end if;
+				
+				when s_lm1 =>
+					state <= s_lm2;
+							
+				when s_lm2 =>
+					if t3(8) = '0' then
+						state <= s_lm1;
+					else
+						if IR(15 downto 12) = "1100" then
+							state <= s_lm3;
+						else
+							state <= s_sm3;
+						end if;
+					end if;
+						
+				when s_lm3 =>
+					state <= s_lm4;
+				
+				when s_sm3 =>
+					state <= s_lm4;
+						
+				when s_lm4 =>
+					state <= s_lm1;
 					
 				when s_beq0 =>
 					if t1 = '0' then
@@ -124,7 +131,7 @@ next_state_logic: process (clock, reset, IR, C, Z)
 					
 				when s0_b =>
 					if IR(15 downto 12) = "1001" then					--JAl
-						state <= s_jal1;	
+						state <= s_beq1;	
 					else
 						state <= s_jlr;
 					end if;

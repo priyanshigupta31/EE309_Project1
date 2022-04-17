@@ -10,7 +10,7 @@ entity alu_beh is
         A: in std_logic_vector(operand_width-1 downto 0);
         B: in std_logic_vector(operand_width-1 downto 0);
         sel: in std_logic_vector(sel_line-1 downto 0);
-		control: in std_logic_vector(3 downto 0);
+		controlword_alu: in std_logic_vector(3 downto 0);
         op: out std_logic_vector(operand_width-1 downto 0);
 		  C: out std_logic
     ) ;
@@ -116,15 +116,15 @@ architecture a1 of alu_beh is
 
 signal pc, RF_d1, RF_d2, ls_out, sel16_out, t2, t1: std_logic_vector(15 downto 0);
 begin
-alu : process( A, B, sel, control )
+alu : process( A, B, sel, controlword_alu )
 begin
     
-        if(control = "0001") then --S0
+        if(controlword_alu = "0001") then --S0
 				pc <= A;
             op <= add_2(A); -- not possible to use op, define t1?
            -- t1 <= op;
         
-        elsif(control = "0010") then --S_ar
+        elsif(controlword_alu = "0010") then --S_ar
 				RF_d1 <= A;
 				RF_d2 <= B;
             if (sel = "00") then 
@@ -138,7 +138,7 @@ begin
             end if;
            -- RF_d3 <= op;--define
         
-        elsif(control = "0011") then --S_ar_ls
+        elsif(controlword_alu = "0011") then --S_ar_ls
 				RF_d1 <= A;
 				ls_out <= B;
             if (sel = "00") then 
@@ -152,52 +152,52 @@ begin
             end if;
            -- RF_d3 <= op;--define
         
-        elsif(control = "0100") then --S_adi
+        elsif(controlword_alu = "0100") then --S_adi
 				RF_d1 <= A;
 				sel16_out <= B;
             op <= add(A, B);
             --RF_d3 <= op;
         
-        elsif(control = "0101") then --S_ls
+        elsif(controlword_alu = "0101") then --S_ls
 				sel16_out <= A;
 				RF_d1 <= B;
             op <= add(A, B);
             --memA <= op;
         
-        elsif (control = "0110") then --S_beq0
+        elsif (controlword_alu = "0110") then --S_beq0
 				RF_d1 <= A;
 				RF_d2 <= B;
             op <= sub (A, B);
             --t1 <= op;
         
-        elsif (control = "1001") then --S_beq1
+        elsif (controlword_alu = "1001") then --S_beq1
 				pc <= A;
 				sel16_out <= B;
             op <= sub (A, B);
             --t1 <= op;
         
-        elsif (control = "0111") then --S_0b
+        elsif (controlword_alu = "0111") then --S_0b
 				pc <= A;
             op <= add_2(A);
             --RF_d3 <= op;
         
-        elsif (control = "1000") then --S_jri1
+        elsif (controlword_alu = "1000") then --S_jri1
 				RF_d1 <= A;
 				sel16_out <= B;
             op <= add(A, B);
             --RF_d3 <= op;
         
-        elsif (control = "1011") then --S_lm4
+        elsif (controlword_alu = "1011") then --S_lm4
 				t2 <= A;
             op <= add_2(A);
             --t3 <= op;
 
-        elsif (control = "1100") then --S_lm2
+        elsif (controlword_alu = "1100") then --S_lm2
 				t1 <= A;
             op <= sub_1(A);
             --t4 <= op;
 
-        elsif (control = "1101") then --S_jr2
+        elsif (controlword_alu = "1101") then --S_jr2
             t1 <= A;
             pc <= B;
         op <= sub(A, B);

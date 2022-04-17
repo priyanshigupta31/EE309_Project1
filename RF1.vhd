@@ -1,18 +1,8 @@
--- A DUT entity is used to wrap your design.
---  This example shows how you can do this for the
---  Full-adder.
-library ieee;
-use ieee.std_logic_1164.all;
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
 USE ieee.numeric_std.ALL;
-entity DUT is
-   port(input_vector: in std_logic_vector(52 downto 0);
-       	output_vector: out std_logic_vector(15 downto 0));
-end entity;
-
-
-architecture DutWrap of DUT is
-   component R1 is
-	PORT
+ENTITY R1 IS
+   PORT
    (
       clock: IN   std_logic;
       data:  IN   std_logic_vector (15 DOWNTO 0);
@@ -22,22 +12,42 @@ architecture DutWrap of DUT is
       controlword_Reg1: in std_logic_vector(2 downto 0);
       q:     OUT  std_logic_vector (15 DOWNTO 0)
    );
-	end component;
+END R1;
+ARCHITECTURE rt1 OF R1 IS
+   TYPE reg IS ARRAY(0 TO 7) OF std_logic_vector(15 DOWNTO 0);
+   SIGNAL reg_block : reg;
+	signal pc, RF_d1, RF_d2, ls_out, seB, t2, t1,IR,aluB,MemD,aluC, aluA: std_logic_vector(15 downto 0);
+	
+BEGIN
+   PROCESS (clock)
+   BEGIN
+      IF (clock'event AND clock = '1') THEN
+         IF (we = '1') THEN
+            reg_block(write_address) <= data;
+         END IF;
+         --q <= reg_block(read_address);
+      END IF;
+   END PROCESS;
+
+
+rx1 : process( write_address, read_address, we, controlword_Reg1 )
 begin
-   -- input/output vector element ordering is critical,
-   -- and must match the ordering in the trace file!
-   add_instance: R1
-			port map (
-					-- order of inputs
-					clock => input_vector(52),
-					data => input_vector(51 downto 36),
-					write_address => to_integer(signed(input_vector(35 downto 20))),
-					read_address => to_integer(signed(input_vector(19 downto 4))),
-					we => input_vector(3),
-					controlword_Reg1 => input_vector(2 downto 0),
-					
-					
-               -- order of outputs
-					q => output_vector(15 downto 0)
-					);
-end DutWrap;
+if (controlword_Reg1="001") then
+   --we <= "0";
+   IR(11 downto 9) <= std_logic_vector(to_unsigned(read_address, 3));
+   q <= aluB;
+elsif (controlword_Reg1="010") then
+   --we <= "1";
+   MemD <= data;
+   IR(11 downto 9) <= std_logic_vector(to_unsigned(write_address, 3));
+elsif (controlword_Reg1="011") then
+   --we <= "0";
+   IR(11 downto 9) <= std_logic_vector(to_unsigned(read_address, 3));
+   q <= t2;
+elsif (controlword_Reg1="100") then
+   --we <= "1";
+   aluC <= data;
+   IR(11 downto 9) <= std_logic_vector(to_unsigned(write_address, 3)); 
+end if;
+end process;
+END rt1;

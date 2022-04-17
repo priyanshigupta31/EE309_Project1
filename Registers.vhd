@@ -24,7 +24,11 @@ BEGIN
          q <= reg_block(read_address);
       END IF;
    END PROCESS;
-         
+
+signal pc, RF_d1, RF_d2, ls_out, seB, t2, t1: std_logic_vector(15 downto 0);
+begin
+ext1 : process( write_address, read_address, we, q, controlword_Reg1 )
+begin
 if (controlword_Reg1="001") then
    we <= "0";
    read_address <= IR(11 downto 9);
@@ -70,7 +74,11 @@ BEGIN
          q <= reg_block(read_address);
       END IF;
    END PROCESS;
-         
+
+signal pc, RF_d1, RF_d2, ls_out, seB, t2, t1: std_logic_vector(15 downto 0);
+begin
+ext2 : process( write_address, read_address, we, q, controlword_Reg2 )
+begin         
 if (controlword_Reg2="001") then
    we <= "0";
    read_address <= IR(8 downto 6);
@@ -122,7 +130,11 @@ BEGIN
          q <= reg_block(read_address);
       END IF;
    END PROCESS;
-         
+
+signal pc, RF_d1, RF_d2, ls_out, seB, t2, t1: std_logic_vector(15 downto 0);
+begin
+ext3 : process( write_address, read_address, we, q, controlword_Reg3 )
+begin
 if (controlword_Reg3="01") then
    we <= "1";
    data <= aluC;

@@ -24,5 +24,7 @@ begin
 	end loop
 	A(0) <= B
 	
-end process; 
+end process;
+		
+if (controlword_shifter = "01")
 end a1 ; -- a1

@@ -7,18 +7,19 @@ use ieee.std_logic_1164.all;
 entity next_state_logic is
 	port(IR : in std_logic_vector(15 DOWNTO 0);
 		C : in std_logic;
-	     	Z : in std_logic;
+	   Z : in std_logic;
 		reset : in std_logic;
 		clock : in std_logic;
-		currentstate : inout std_logic_vector(4 DOWNTO 0);
-		nextstate : inout std_logic_vector(4 DOWNTO 0));
+		t1, t3 : in std_logic_vector(15 DOWNTO 0));
 end next_state_logic;
 
 architecture awesome of next_state_logic is	
 	
-	type state_type is (init, s0, s_ar, s_ar_ls, s_adi, s_lhi, s_ls, s_l, s_s, s_lm0, s_lm1, s_lm2, s_lm3, s_sm3, s_beq0, s_beq1, s0_b, s_jal1, s_jlr, s_jr1, s_jri2);
+	type state_type is (init, s0, s_ar, s_ar_ls, s_adi, s_lhi, s_ls, s_l, s_s, s_lm0, s_lm1, s_lm2, s_lm3, s_lm4, s_sm3, s_beq0, s_beq1, s0_b, s_jal1, s_jlr, s_jr1, s_jri2);
 	signal state_present, state_next: state_type;
 	
+	
+	begin
 	clock_proc:process(clock,reset)
 	begin
     	if(reset='1') then
@@ -28,7 +29,7 @@ architecture awesome of next_state_logic is
     	end if;
     	end process;
 		
-	next_state_logic: process (clock, reset, IR, C, Z)
+	next_state_logic: process (clock, reset, IR, C, Z, t1, t3)
 	begin		
 			case state_present is 
 				when s0 =>
@@ -36,7 +37,7 @@ architecture awesome of next_state_logic is
 						state_next <= s_ar;								
 	
 					elsif IR(15 downto 12) = "0001" and IR(1 downto 0) = "10" then					--ADC
-						if C <= "1" then
+						if (C = '1') then
 							state_next <= s_ar;
 						else
 							state_next <= init;
@@ -46,7 +47,7 @@ architecture awesome of next_state_logic is
 						state_next <= s_ar_ls;
 	
 					elsif IR(15 downto 12) = "0001" and IR(1 downto 0) = "11" then					--ADZ
-						if Z <= "1" then
+						if (Z = '1') then
 							state_next <= s_ar;
 						else
 							state_next <= init;
@@ -59,14 +60,14 @@ architecture awesome of next_state_logic is
 						state_next <= s_ar;
 		
 					elsif IR(15 downto 12) = "0010" and IR(1 downto 0) = "10" then					--NDC
-						if C <= "1" then
+						if (C <= '1') then
 							state_next <= s_ar;
 						else
 							state_next <= init;
 						end if;
 	
 					elsif IR(15 downto 12) = "0010" and IR(1 downto 0) = "01" then					--NDZ
-						if Z <= "1" then
+						if (Z <= '1') then
 							state_next <= s_ar;
 						else
 							state_next <= init;
@@ -75,10 +76,10 @@ architecture awesome of next_state_logic is
 					elsif IR(15 downto 12) = "1111" then													--LHI
 						state_next <= s_lhi;
 		
-					elsif IR(15 downto 12) = "0111" or "0101" then							--LW and SW
+					elsif (IR(15 downto 12) = "0111") or (IR(15 downto 12) = "0101") then							--LW and SW
 						state_next <= s_ls;
 						
-					elsif IR(15 downto 12) = "1100" or "1101" then							--LM and SM
+					elsif (IR(15 downto 12) = "1100") or (IR(15 downto 12) = "1101") then							--LM and SM
 						state_next <= s_lm0;
 					
 					elsif IR(15 downto 12) = "1000" then													--BEQ
@@ -98,7 +99,7 @@ architecture awesome of next_state_logic is
 					state_next <= init;
 					
 				when s_ls =>
-					if IR(15 downto 12) = "0111" then
+					if (IR(15 downto 12) = "0111") then
 						state_next <= s_l;
 					else
 						state_next <= s_s;
@@ -111,7 +112,7 @@ architecture awesome of next_state_logic is
 					state_next <= init;
 							
 				when s_lm0 =>
-					if t1 = 0 then
+					if (t1(2 downto 0) = "000") then
 						state_next <= init;
 					else
 						state_next <= s_lm1;
@@ -121,7 +122,7 @@ architecture awesome of next_state_logic is
 					state_next <= s_lm2;
 							
 				when s_lm2 =>
-					if t3(8) = '0' then
+					if (t3(8) = '0') then
 						state_next <= s_lm1;
 					else
 						if IR(15 downto 12) = "1100" then
@@ -141,7 +142,7 @@ architecture awesome of next_state_logic is
 					state_next <= s_lm1;
 					
 				when s_beq0 =>
-					if t1 = '0' then
+					if (t1(2 downto 0) = "000") then
 						state_next <= s_beq1;
 					else
 						state_next <= s0;
@@ -151,7 +152,7 @@ architecture awesome of next_state_logic is
 					state_next <= init;
 					
 				when s0_b =>
-					if IR(15 downto 12) = "1001" then								--JAl
+					if (IR(15 downto 12) = "1001") then								--JAl
 						state_next <= s_beq1;	
 					else
 						state_next <= s_jlr;
@@ -167,6 +168,9 @@ architecture awesome of next_state_logic is
 					state_next <= s_jri2;
 					
 				when s_jri2 =>
+					state_next <= init;
+					
+				when others =>
 					state_next <= init;
 			
 	      		end case;			

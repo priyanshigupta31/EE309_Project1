@@ -76,13 +76,13 @@ architecture awesome of next_state_logic is
 					elsif IR(15 downto 12) = "1111" then													--LHI
 						state_next <= s_lhi;
 		
-					elsif (IR(15 downto 12) = "0111") or (IR(15 downto 12) = "0101") then							--LW and SW
+					elsif (IR(15 downto 12) = "0111") or (IR(15 downto 12) = "0101") then				--LW and SW
 						state_next <= s_ls;
 						
-					elsif (IR(15 downto 12) = "1100") or (IR(15 downto 12) = "1101") then							--LM and SM
+					elsif (IR(15 downto 12) = "1100") or (IR(15 downto 12) = "1101") then				--LM and SM
 						state_next <= s_lm0;
 					
-					elsif IR(15 downto 12) = "1000" then													--BEQ
+					elsif IR(15 downto 12) = "1000" then								--BEQ
 						state_next <= init;
 					end if;
 						

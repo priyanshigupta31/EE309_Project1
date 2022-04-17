@@ -58,6 +58,10 @@ begin
 		
 end process ; -- shift9to16
 
+signal pc, RF_d1, RF_d2, RF_d3, ls_out, seB, t2, t1, aluA, aluB, aluC: std_logic_vector(15 downto 0);
+begin
+ext1 : process( A,B,sel )
+begin
 if (controlword_SE2="01") then
     A <= IR(8 downto 0);
     B <= RF_d3;
@@ -78,6 +82,10 @@ begin
 		
 end process ; -- shift6to16
 
+signal pc, RF_d1, RF_d2, ls_out, seB, t2, t1: std_logic_vector(15 downto 0);
+begin
+ext2 : process( A,B )
+begin
 if (controlword_SE1="01") then
     A <= IR(5 downto 0);
     B <= aluB;

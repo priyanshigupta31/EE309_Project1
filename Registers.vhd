@@ -1,13 +1,15 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
+USE ieee.numeric_std.ALL;
 ENTITY R1 IS
    PORT
    (
       clock: IN   std_logic;
       data:  IN   std_logic_vector (15 DOWNTO 0);
-      write_address:  IN   integer RANGE 0 to 7;
-      read_address:   IN   integer RANGE 0 to 7;
+      write_address:  IN   integer RANGE 0 to 65536;
+      read_address:   IN   integer RANGE 0 to 65536;
       we:    IN   std_logic;
+      control_Reg1: in std_logic_vector(2 downto 0);
       q:     OUT  std_logic_vector (15 DOWNTO 0)
    );
 END R1;
@@ -25,26 +27,26 @@ BEGIN
       END IF;
    END PROCESS;
 
-signal pc, RF_d1, RF_d2, ls_out, seB, t2, t1: std_logic_vector(15 downto 0);
+signal pc, RF_d1, RF_d2, ls_out, seB, t2, t1,IR,aluB,MemD,aluC: std_logic_vector(15 downto 0);
 begin
 rx1 : process( write_address, read_address, we, q, controlword_Reg1 )
 begin
 if (controlword_Reg1="001") then
    we <= "0";
-   read_address <= IR(11 downto 9);
+   IR(11 downto 9) <= std_logic_vector(to_unsigned(read_address, 16));
    q <= aluB;
 elsif (controlword_Reg1="010") then
    we <= "1";
    data <= MemD;
-   write_address <= IR(11 downto 9);
+   IR(11 downto 9) <= std_logic_vector(to_unsigned(write_address, 16));
 elsif (controlword_Reg1="011") then
    we <= "0";
-   read_address <= IR(11 downto 9);
+   IR(11 downto 9) <= std_logic_vector(to_unsigned(read_address, 16));
    q <= t2;
 elsif (controlword_Reg1="100") then
    we <= "1";
    data <= aluC;
-   write_address <= IR(11 downto 9); 
+   IR(11 downto 9) <= std_logic_vector(to_unsigned(write_address, 16)); 
 end if;
 END rtl;
 
@@ -55,9 +57,10 @@ ENTITY R2 IS
    (
       clock: IN   std_logic;
       data:  IN   std_logic_vector (15 DOWNTO 0);
-      write_address:  IN   integer RANGE 0 to 7;
-      read_address:   IN   integer RANGE 0 to 7;
+      write_address:  IN   integer RANGE 0 to 65536;
+      read_address:   IN   integer RANGE 0 to 65536;
       we:    IN   std_logic;
+      control_Reg2: in std_logic_vector(2 downto 0);
       q:     OUT  std_logic_vector (15 DOWNTO 0)
    );
 END R2;
@@ -75,34 +78,34 @@ BEGIN
       END IF;
    END PROCESS;
 
-signal pc, RF_d1, RF_d2, ls_out, seB, t2, t1: std_logic_vector(15 downto 0);
+signal pc, RF_d1, RF_d2, ls_out, seB, t2, t1,IR,aluB,MemD,aluC: std_logic_vector(15 downto 0);
 begin
 rx2 : process( write_address, read_address, we, q, controlword_Reg2 )
 begin         
 if (controlword_Reg2="001") then
    we <= "0";
-   read_address <= IR(8 downto 6);
+   IR(8 downto 6) <= std_logic_vector(to_unsigned(read_address, 16));
    q <= aluA;
 elsif (controlword_Reg2="010") then
    we <= "0";
-   read_address <= IR(8 downto 6);
+   IR(8 downto 6) <= std_logic_vector(to_unsigned(read_address, 16));
    q <= aluB;
 elsif (controlword_Reg2="011") then
    we <= "0";
-   read_address <= IR(11 downto 9);
+   IR(11 downto 9) <= std_logic_vector(to_unsigned(read_address, 16));
    q <= MemD;
 elsif (controlword_Reg2="100") then
    we <= "1";
    data <= MemD;
-   write_address <= t1(2 downto 0); 
+   t1(2 downto 0) <= std_logic_vector(to_unsigned(write_address, 16)); 
 elsif (controlword_Reg2="101") then
    we <= "0";
-   read_address <= t1(2 downto 0);
+   t1(2 downto 0) <= std_logic_vector(to_unsigned(read_address, 16));
    q <= aluA;
 elsif (controlword_Reg2="110") then
    we <= "1";
    data <= pc;
-   write_address <= IR(8 downto 6);
+   IR(8 downto 6) <= std_logic_vector(to_unsigned(write_address, 16));
 end if;
 END rt2;
 
@@ -111,9 +114,10 @@ ENTITY R3 IS
    (
       clock: IN   std_logic;
       data:  IN   std_logic_vector (15 DOWNTO 0);
-      write_address:  IN   integer RANGE 0 to 7;
-      read_address:   IN   integer RANGE 0 to 7;
+      write_address:  IN   integer RANGE 0 to 65536;
+      read_address:   IN   integer RANGE 0 to 65536;
       we:    IN   std_logic;
+      control_Reg3: in std_logic_vector(1 downto 0);
       q:     OUT  std_logic_vector (15 DOWNTO 0)
    );
 END R3;
@@ -131,21 +135,21 @@ BEGIN
       END IF;
    END PROCESS;
 
-signal pc, RF_d1, RF_d2, ls_out, seB, t2, t1: std_logic_vector(15 downto 0);
+signal pc, RF_d1, RF_d2, ls_out, seB, t2, t1,IR,aluB,MemD,aluC: std_logic_vector(15 downto 0);
 begin
 rx3 : process( write_address, read_address, we, q, controlword_Reg3 )
 begin
 if (controlword_Reg3="01") then
    we <= "1";
    data <= aluC;
-   write_address <= IR(5 downto 3);
+   IR(5 downto 3) <=  std_logic_vector(to_unsigned(write_address, 16));
 elsif (controlword_Reg3="10") then
    we <= "1";
    data <= aluC;
-   write_address <= IR(8 downto 6);
+   IR(8 downto 6) <= std_logic_vector(to_unsigned(write_address, 16));
 elsif (controlword_Reg3="11") then
    we <= "1";
    data <= seB;
-   write_address <= IR(11 downto 9);
+   IR(11 downto 9) <= std_logic_vector(to_unsigned(write_address, 16));
 end if;  
 END rtl;

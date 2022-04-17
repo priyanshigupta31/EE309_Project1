@@ -66,7 +66,7 @@ elsif (controlword_SE2="10") then
     A <= IR(8 downto 0);
     B <= aluB;
     sel <= "0";
-end a1 ; -- a1
+end a2 ; -- a1
 
 
 architecture a3 of extender_6to16 is
